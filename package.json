@@ -1,0 +1,23 @@
+{
+  "name": "node.js-typescript-tdd",
+  "version": "1.0.0",
+  "description": "Following the course of : https://dreamcode.udemy.com/course/programador-autodidacta-nodejs-typescript-tdd-clean-code/learn/lecture/23738390#overview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victor-Tilve/Node.js-TypeScript-TDD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Victor-Tilve/Node.js-TypeScript-TDD/issues"
+  },
+  "homepage": "https://github.com/Victor-Tilve/Node.js-TypeScript-TDD#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.2.1"
+  }
+}

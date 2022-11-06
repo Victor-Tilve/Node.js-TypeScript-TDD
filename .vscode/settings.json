@@ -7,4 +7,5 @@
     "files.exclude": {
         "**/.git": true
     },
+    "editor.tabSize": 2
 }

@@ -13,5 +13,6 @@ describe('Testing Food Model', () => {
     expect(foodModel.getDescription()).toEqual('Una verdura saludable')
     expect(foodModel.getPrice()).toBe(3000)
     expect(foodModel.getInventory()).toBe(25)
+    expect(foodModel.getFood()).toEqual(foodModel)
   })
 })

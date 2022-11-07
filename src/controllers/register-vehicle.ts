@@ -2,18 +2,17 @@ import { httpRequest, HttpResponse } from '../interfaces/http-interface'
 
 export class RegisterVehicle {
   handle (httpRequest: httpRequest): HttpResponse {
-    if (httpRequest.body.name === undefined) {
-      return {
-        statusCode: 400,
-        body: new Error('error in the: name')
+    const requiredProperties = ['name', 'model', 'year', 'color']
+
+    for (const prop of requiredProperties) {
+      if (httpRequest.body[prop] === undefined) {
+        return {
+          statusCode: 400,
+          body: new Error(`error in the: ${prop}`)
+        }
       }
     }
-    if (httpRequest.body.model === undefined) {
-      return {
-        statusCode: 400,
-        body: new Error('error in the: model')
-      }
-    }
+
     return {
       statusCode: 200,
       body: {

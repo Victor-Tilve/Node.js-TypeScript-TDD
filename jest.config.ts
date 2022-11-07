@@ -6,5 +6,6 @@ export default {
   testEnvironment: 'node',
   transform: {
     '.+\\.ts$': 'ts-jest'
-  }
+  },
+  modulePathIgnorePatterns: ['./src/interfaces']
 }

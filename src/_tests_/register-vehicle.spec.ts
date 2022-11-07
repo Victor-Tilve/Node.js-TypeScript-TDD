@@ -30,4 +30,19 @@ describe('RegisterVehicle', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new Error('error in the: model'))
   })
+
+  test('if the model is completed return 200', () => {
+    // NOTE: System under Test = SUT
+    const sut = new RegisterVehicle()
+    const httpRequest = {
+      body: {
+        name: 'Nissan',
+        model: 'DXT',
+        year: 2020
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({ message: 'Vehicle was registered successfuly' })
+  })
 })

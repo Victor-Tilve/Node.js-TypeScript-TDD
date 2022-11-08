@@ -1,10 +1,15 @@
 import { RegisterVehicle } from './register-vehicle'
 import { MissingFormalParameter } from '../../errors/client-error'
+import { DbAddAccount } from '../../data/useCases/db-add-account'
+import { badRequest } from '../../helpers/http-helper'
+
+const newTimeout = 10000
 
 describe('RegisterVehicle', () => {
-  test('if the name does not exist return 400', () => {
+  test('if the name does not exist return 400', async () => {
+    const dbAddAccount = new DbAddAccount()
     // NOTE: System under Test = SUT
-    const sut = new RegisterVehicle()
+    const sut = new RegisterVehicle(dbAddAccount)
     const httpRequest = {
       body: {
         // name: 'Nissan',
@@ -14,14 +19,14 @@ describe('RegisterVehicle', () => {
 
       }
     }
-    const httpResponse = sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingFormalParameter('name'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingFormalParameter('name')))
   })
 
-  test('if the model does not exist return 400', () => {
+  test('if the model does not exist return 400', async () => {
+    const dbAddAccount = new DbAddAccount()
     // NOTE: System under Test = SUT
-    const sut = new RegisterVehicle()
+    const sut = new RegisterVehicle(dbAddAccount)
     const httpRequest = {
       body: {
         name: 'Nissan',
@@ -30,14 +35,14 @@ describe('RegisterVehicle', () => {
         color: 'blue'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingFormalParameter('model'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingFormalParameter('model')))
   })
 
-  test('if the year does not exist return 400', () => {
+  test('if the year does not exist return 400', async () => {
+    const dbAddAccount = new DbAddAccount()
     // NOTE: System under Test = SUT
-    const sut = new RegisterVehicle()
+    const sut = new RegisterVehicle(dbAddAccount)
     const httpRequest = {
       body: {
         name: 'Nissan',
@@ -46,14 +51,14 @@ describe('RegisterVehicle', () => {
         color: 'blue'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingFormalParameter('year'))
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingFormalParameter('year')))
   })
 
-  test('if the color does not exist return 400', () => {
+  test('if the color does not exist return 400', async () => {
+    const dbAddAccount = new DbAddAccount()
     // NOTE: System under Test = SUT
-    const sut = new RegisterVehicle()
+    const sut = new RegisterVehicle(dbAddAccount)
     const httpRequest = {
       body: {
         name: 'Nissan',
@@ -62,14 +67,15 @@ describe('RegisterVehicle', () => {
         // color: 'blue'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingFormalParameter('color'))
   })
 
-  test('if the model is completed return 200', () => {
+  test('if the model is completed return 200', async () => {
+    const dbAddAccount = new DbAddAccount()
     // NOTE: System under Test = SUT
-    const sut = new RegisterVehicle()
+    const sut = new RegisterVehicle(dbAddAccount)
     const httpRequest = {
       body: {
         name: 'Nissan',
@@ -78,8 +84,18 @@ describe('RegisterVehicle', () => {
         color: 'blue'
       }
     }
-    const httpResponse = sut.handle(httpRequest)
+    jest.setTimeout(newTimeout)
+    // thrown: Exceeded timeout of 5000 ms for a test. \
+    // Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test.
+    const httpResponse = await sut.handle(httpRequest) // TODO: I should make a mock
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual({ message: 'Vehicle was registered successfuly' })
+    expect(httpResponse.body).toEqual({
+      body: {
+        name: 'Nissan',
+        model: 'DXT',
+        year: 2020,
+        color: 'blue'
+      }
+    })
   })
 })

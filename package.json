@@ -4,10 +4,12 @@
   "description": "Following the course of : https://dreamcode.udemy.com/course/programador-autodidacta-nodejs-typescript-tdd-clean-code/learn/lecture/23738390#overview",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
     "start": "tsnd --transpile-only --respawn --ignore-watch node_modeles src/main/server/server.ts",
-    "test:int": "jest -c jest.config.int.ts",
-    "test:unit": "jest -c jest.config.unit.ts"
+    "test": "jest --passWithNoTests --silent --noStackTrace",
+    "test:all": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:int": "npm test -- --watch -c jest.config.int.ts",
+    "test:unit": "npm test -- --watch -c jest.config.unit.ts"
   },
   "repository": {
     "type": "git",

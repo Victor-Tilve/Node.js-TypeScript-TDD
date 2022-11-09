@@ -4,7 +4,8 @@ const VehicleSchema = new mongoose.Schema({
   name: { type: String },
   model: { type: String },
   year: { type: String },
-  color: { type: String }
+  color: { type: String },
+  email: { type: String }
 })
 
 export default VehicleSchema
@@ -14,4 +15,6 @@ export class VehicleModel {
   model: string
   year: string
   color: string
+  email: string
+  sale: string
 }

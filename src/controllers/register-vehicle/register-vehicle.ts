@@ -18,9 +18,9 @@ export class RegisterVehicle implements Controller {
           return badRequest(new MissingFormalParameter(prop))
         }
       }
-      const { name, model, year, color } = httpRequest.body
+      const { name, model, year, color, email, sale } = httpRequest.body
       const vehicle = await this.addAccount.add({
-        name, model, year, color
+        name, model, year, color, email, sale
       })
       return success(vehicle)
     } catch (error) {
